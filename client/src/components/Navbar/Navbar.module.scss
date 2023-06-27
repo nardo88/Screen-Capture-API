@@ -1,0 +1,15 @@
+.button {
+    color: var(--color-primary);
+    border: 1px solid var(--button-color);
+    background: var(--button-color);
+    cursor: pointer;
+    padding: 5px 10px;
+    text-transform: uppercase;
+    border-radius: 4px;
+}
+
+.Navbar {
+    display: flex;
+    padding: 20px 0;
+    gap: 20px;
+}

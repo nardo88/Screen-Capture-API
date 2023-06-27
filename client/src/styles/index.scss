@@ -1,0 +1,14 @@
+@import 'variable.scss';
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-size: 16px;
+  line-height: 130%;
+  font-family: sans-serif;
+}
+
+body {
+  background: var(--bacground-primary);
+}

@@ -22,7 +22,8 @@
     "baseUrl": "./",
     "paths": {
       "@components/*": ["./src/components/*"],
-      "@helpers/*": ["./src/helpers/*"]
+      "@helpers/*": ["./src/helpers/*"],
+      "@styles/*": ["./src/styles/*"]
     }
   },
   "include": ["src"],
