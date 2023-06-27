@@ -1,10 +1,11 @@
 import { classNames } from '@helpers/classNames'
-import { FC, useState } from 'react'
+import { Dispatch, FC, SetStateAction, useState } from 'react'
 import cls from './Navbar.module.scss'
 import { Error } from '@components/Error/Error'
 
 interface Navbar {
   className?: string
+  setStreem: Dispatch<SetStateAction<MediaStreamTrack | null>>
 }
 
 interface IMediaOptions {
@@ -19,7 +20,7 @@ interface IOptions {
   cursor?: 'always' | 'motion' | 'never' // Указывает, следует ли захватывать курсор мыши
 }
 
-export const Navbar: FC<Navbar> = ({ className }) => {
+export const Navbar: FC<Navbar> = ({ className, setStreem }) => {
   const [error, setError] = useState<null | string>(null)
 
   async function startCapture(displayMediaOptions: IOptions) {
@@ -27,7 +28,7 @@ export const Navbar: FC<Navbar> = ({ className }) => {
       const captureStream = await navigator.mediaDevices.getDisplayMedia(
         displayMediaOptions
       )
-      return captureStream
+      setStreem(captureStream.getVideoTracks()[0])
     } catch (error) {
       setError(error as string)
     }
