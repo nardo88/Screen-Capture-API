@@ -6,6 +6,7 @@ import { Error } from '@components/Error/Error'
 interface Navbar {
   className?: string
   setStreem: Dispatch<SetStateAction<MediaStream | null>>
+  streem: MediaStream | null
 }
 
 interface IMediaOptions {
@@ -20,7 +21,7 @@ interface IOptions {
   cursor?: 'always' | 'motion' | 'never' // Указывает, следует ли захватывать курсор мыши
 }
 
-export const Navbar: FC<Navbar> = ({ className, setStreem }) => {
+export const Navbar: FC<Navbar> = ({ className, setStreem, streem }) => {
   const [error, setError] = useState<null | string>(null)
 
   async function startCapture(displayMediaOptions: IOptions) {
@@ -32,6 +33,12 @@ export const Navbar: FC<Navbar> = ({ className, setStreem }) => {
     } catch (error) {
       setError(error as string)
     }
+  }
+
+  function stopCapture() {
+    const tracks = streem?.getTracks()
+    tracks?.forEach((item) => item.stop())
+    setStreem(null)
   }
   return (
     <div className={classNames(cls.Navbar, {}, [className])}>
@@ -50,7 +57,9 @@ export const Navbar: FC<Navbar> = ({ className, setStreem }) => {
         className={cls.button}>
         start capture
       </button>
-      <button className={cls.button}>stop capture</button>
+      <button onClick={stopCapture} className={cls.button}>
+        stop capture
+      </button>
       {error && <Error error={error} />}
     </div>
   )

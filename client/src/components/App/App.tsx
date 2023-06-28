@@ -14,7 +14,7 @@ export const App: FC<App> = ({ className }) => {
   return (
     <div className={classNames(cls.App, {}, [className])}>
       <div className={cls.container}>
-        <Navbar setStreem={setStreem} />
+        <Navbar setStreem={setStreem} streem={streem} />
         <VidoeBlock streem={streem} />
       </div>
     </div>
