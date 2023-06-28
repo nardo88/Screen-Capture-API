@@ -4,7 +4,7 @@ import cls from './VidoeBlock.module.scss'
 
 interface VidoeBlock {
   className?: string
-  streem: null | MediaStreamTrack
+  streem: null | MediaStream
 }
 
 export const VidoeBlock: FC<VidoeBlock> = ({ className, streem }) => {
@@ -16,11 +16,10 @@ export const VidoeBlock: FC<VidoeBlock> = ({ className, streem }) => {
     }
   }, [streem])
 
-  if (!streem) return null
   return (
     <div className={classNames('', {}, [className])}>
       <h4>Translation</h4>
-      <video ref={ref} className={cls.video} src=""></video>
+      {streem && <video ref={ref} className={cls.video} autoPlay></video>}
     </div>
   )
 }

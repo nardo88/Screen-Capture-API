@@ -5,7 +5,7 @@ import { Error } from '@components/Error/Error'
 
 interface Navbar {
   className?: string
-  setStreem: Dispatch<SetStateAction<MediaStreamTrack | null>>
+  setStreem: Dispatch<SetStateAction<MediaStream | null>>
 }
 
 interface IMediaOptions {
@@ -28,7 +28,7 @@ export const Navbar: FC<Navbar> = ({ className, setStreem }) => {
       const captureStream = await navigator.mediaDevices.getDisplayMedia(
         displayMediaOptions
       )
-      setStreem(captureStream.getVideoTracks()[0])
+      setStreem(captureStream)
     } catch (error) {
       setError(error as string)
     }
@@ -46,12 +46,6 @@ export const Navbar: FC<Navbar> = ({ className, setStreem }) => {
             cursor: 'always',
             video: true,
           })
-            .then((data) => {
-              console.log('data: ', data)
-            })
-            .catch((error) => {
-              console.error('error: ', error)
-            })
         }
         className={cls.button}>
         start capture

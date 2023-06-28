@@ -9,7 +9,7 @@ interface App {
 }
 
 export const App: FC<App> = ({ className }) => {
-  const [streem, setStreem] = useState<null | MediaStreamTrack>(null)
+  const [streem, setStreem] = useState<null | MediaStream>(null)
 
   return (
     <div className={classNames(cls.App, {}, [className])}>
