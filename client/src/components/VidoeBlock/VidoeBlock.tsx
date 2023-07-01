@@ -1,5 +1,12 @@
 import { classNames } from '@helpers/classNames'
-import { Dispatch, FC, SetStateAction, useEffect, useRef } from 'react'
+import {
+  Dispatch,
+  FC,
+  SetStateAction,
+  useEffect,
+  useRef,
+  useState,
+} from 'react'
 import cls from './VidoeBlock.module.scss'
 
 interface VidoeBlock {
@@ -15,8 +22,16 @@ export const VidoeBlock: FC<VidoeBlock> = ({
   camera,
   setCamera,
 }) => {
-  const refDesctop = useRef<HTMLVideoElement>(null)
   const refCamera = useRef<HTMLVideoElement>(null)
+  const [isMuted, setIsMuted] = useState<boolean>(false)
+
+  const refDesctop = useRef<HTMLVideoElement>(null)
+
+  useEffect(() => {
+    if (streem && refDesctop.current) {
+      refDesctop.current.srcObject = streem
+    }
+  }, [streem])
 
   const stopCamera = () => {
     if (camera) {
@@ -26,11 +41,21 @@ export const VidoeBlock: FC<VidoeBlock> = ({
     }
   }
 
-  useEffect(() => {
-    if (streem && refDesctop.current) {
-      refDesctop.current.srcObject = streem
+  const mute = () => {
+    if (camera) {
+      const audioTrack = camera.getAudioTracks()[0]
+      audioTrack.enabled = false
+      setIsMuted(true)
     }
-  }, [streem])
+  }
+
+  const unMute = () => {
+    if (camera) {
+      const audioTrack = camera.getAudioTracks()[0]
+      audioTrack.enabled = true
+      setIsMuted(false)
+    }
+  }
 
   useEffect(() => {
     if (camera && refCamera.current) {
@@ -47,6 +72,9 @@ export const VidoeBlock: FC<VidoeBlock> = ({
           <div className={cls.CameraWrapper}>
             <div className={cls.controlPanel}>
               <button onClick={stopCamera}>X</button>
+              <button onClick={isMuted ? unMute : mute}>
+                {isMuted ? '&#9785;' : '&#9786;'}
+              </button>
             </div>
             <video ref={refCamera} className={cls.video} autoPlay />
           </div>

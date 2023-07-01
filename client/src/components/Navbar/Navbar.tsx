@@ -25,15 +25,11 @@ interface IOptions extends DisplayMediaStreamOptions {
 
 const constraints = {
   video: true,
-  // audio: true,
+  audio: true,
 }
 
 const otions: IOptions = {
-  audio: {
-    echoCancellation: true,
-    noiseSuppression: true,
-    sampleRate: 44100,
-  },
+  audio: true,
   video: true,
   cursor: 'always', // без него работает
 }
@@ -59,10 +55,8 @@ export const Navbar: FC<Navbar> = ({
   async function startWebCamera() {
     try {
       setCamera(null)
-      const streamCamera = await navigator.mediaDevices.getUserMedia(
-        constraints
-      )
-      setCamera(streamCamera)
+      const camera = await navigator.mediaDevices.getUserMedia(constraints)
+      setCamera(camera)
     } catch (error) {
       setError(error as string)
     }
@@ -73,6 +67,7 @@ export const Navbar: FC<Navbar> = ({
     tracks?.forEach((item) => item.stop())
     setStreem(null)
   }
+
   return (
     <div className={classNames(cls.Navbar, {}, [className])}>
       <button onClick={startCapture} className={cls.button}>
